@@ -59,19 +59,10 @@
           <label>Жоғарғы жазу<input type="text" id="f_badge"></label>
           <label>Тақырып<input type="text" id="f_title"></label>
         </div>
-        <label>Құндылықтар
-          <input type="text" id="f_values">
-        </label>
         <div class="row">
           <label>Сол жақ бұрыш<input type="text" id="f_left"></label>
           <label>Оң жақ бұрыш<input type="text" id="f_right"></label>
         </div>
-        <label>Қол қоюшы
-          <textarea id="f_signer" rows="3"></textarea>
-        </label>
-        <label>Лауазымы
-          <textarea id="f_role" rows="2"></textarea>
-        </label>
         <button class="btn" id="resetText">↺ Мәтінді қайтару</button>
       </div>
     </details>
@@ -161,6 +152,7 @@ const state = {
   custom: false,      // user-uploaded image
 };
 if (state.text.badge === "GENIUS  |  2026") state.text.badge = DEFAULT_TEXT.badge;
+['values','signer','role'].forEach(k=>state.text[k]=DEFAULT_TEXT[k]);
 
 /* ---------- prompt ---------- */
 let FIGMA = [];
@@ -377,7 +369,7 @@ document.getElementById('openGemini').onclick = async ()=>{
   toast('Промпт көшірілді — Gemini-де фото тіркеп, қойыңыз');
 };
 
-const fields = ['name','desc','badge','title','values','left','right','signer','role'];
+const fields = ['name','desc','badge','title','left','right'];
 fields.forEach(k=>{
   const el = document.getElementById('f_'+k);
   el.value = state.text[k];
