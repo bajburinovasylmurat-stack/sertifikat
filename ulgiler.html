@@ -33,10 +33,6 @@
             <button data-g="boy">Ұл бала</button>
             <button data-g="girl">Қыз бала</button>
           </div>
-          <div class="seg" id="hair">
-            <button data-h="keep">Шаш: үлгідегідей</button>
-            <button data-h="own">Шаш: оқушыныкі</button>
-          </div>
         </div>
         <div class="box">
           <h2>Мәтіндер</h2>
@@ -151,8 +147,7 @@ function refresh(){ promptEl.value = buildPrompt(); }
 function select(ex){
   cur = ex; store.set('cur', ex.id);
   gender = store.get('g_'+ex.id) || ex.g;
-  hairMode = store.get('h_'+ex.id) || (ex.hair ? 'keep' : 'own');
-  document.querySelectorAll('#hair button').forEach(b=>b.classList.toggle('on', b.dataset.h===hairMode));
+  hairMode = ex.hair ? 'keep' : 'own';
   if (!values[ex.id]) values[ex.id] = store.get('v_'+ex.id) || ex.fields.map(f=>f.t);
   document.querySelectorAll('.card').forEach(c=>c.classList.toggle('on', c.dataset.id===ex.id));
   $('exImg').src = `examples/${ex.id}.jpg`;
@@ -184,10 +179,6 @@ EXAMPLES.forEach(ex=>{
   list.appendChild(b);
 });
 
-document.querySelectorAll('#hair button').forEach(b=>b.onclick=()=>{
-  hairMode=b.dataset.h; store.set('h_'+cur.id, hairMode);
-  document.querySelectorAll('#hair button').forEach(x=>x.classList.toggle('on',x===b)); refresh();
-});
 document.querySelectorAll('#gender button').forEach(b=>b.onclick=()=>{
   gender=b.dataset.g; store.set('g_'+cur.id, gender);
   document.querySelectorAll('#gender button').forEach(x=>x.classList.toggle('on',x===b)); refresh();
